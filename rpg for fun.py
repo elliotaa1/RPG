@@ -1,5 +1,6 @@
 from re import match
 import random
+import math
 
 def LineLoop():
     for x in range(1, 25):
@@ -9,40 +10,83 @@ def menu(name, warriorSelect, wizardSelect, archerSelect):
     menuSelect = int(input("Please Select One:\n\n1. Battle\n2. Barracks\n3. Settings\n"))
     if warriorSelect == True:
         if menuSelect == 1:
-            warriorBattlePT(name, 150, 50, menuSelect)
+            warriorBattlePT(name, 150, 50)
 
 
-def warriorBattlePT(name, HP, Defense, menuChoice):
+def warriorBattlePT(name, HP, Defense):
     print("Goblin has spawned!\n\nHP: 100\n\n")
     attackLoop = True
+    specialAttackBar = 100
     goblinHP = 100
     while(attackLoop):
-        attackChoice = int(input("1. Auto Attack\n2. Special Attack\n3. Flee\n\nChoice: "))
+        print("Defense: ",int(math.ceil(Defense)))
+        print("Special attack:" , specialAttackBar)
+        attackChoice = int(input("1. Auto Attack\n2. Special Attack\n3. Defend\n4. Flee\n\nChoice: "))
         if attackChoice == 1:
             attackDamage = random.randint(0,25)
             print("\n\nYou deal " , attackDamage , "!")
             goblinHP = goblinHP - attackDamage
-            NPCdamage = random.randint(0, 10)
+            NPCdamage = random.randint(50, 60)
+            NPCdamage = NPCdamage - Defense
             HP = HP - NPCdamage
             print("\nGoblin hits you for " , NPCdamage , "!\n")
-
-            if HP != 0:
-                print(name, ": " ,HP)
+            if HP >= 0:
+                print(name, ": " ,int(math.ceil(HP)))
                 attackLoop = True
-            elif HP <= 0:
+            if HP <=0:
                 print("You lose. . .")
+                HP = 0
                 attackLoop = False
+                menu(name, True, False, False)
 
-            if goblinHP != 0:
+            if goblinHP > 0:
                 print("Goblin: " , goblinHP)
                 attackLoop = True
+
             if goblinHP <= 0:
                 goblinHP = 0
                 print("Victory!")
                 attackLoop = False
+                menu(name, True, False, False)
 
-        elif attackChoice == 2:
+        elif attackChoice == 3:
+            if Defense <=50 and Defense >= 0:
+                print("You defend 80% of the attack! You also gain 25 points for your special meter bar. . . ")
+                NPCdamage = random.randint(50, 60)
+                NPCdamage = NPCdamage - Defense
+                blockDamage = NPCdamage * 0.80
+                NPCdamage = NPCdamage - blockDamage
+                HP = HP - NPCdamage
+                print("\nGoblin hits you for " , int(math.ceil(NPCdamage)) , "!\n")
+                print("\nYour defenses decrease. . .\n\n")
+                Defense = Defense - NPCdamage
+                if specialAttackBar < 100:
+                    specialAttackBar = specialAttackBar + 25
+                if Defense <=0:
+                    Defense = 0
+                if HP >= 0:
+                    print(name, ": " ,int(math.ceil(HP)))
+                    attackLoop = True
+                if HP <= 0:
+                    print("You lose. . .")
+                    HP = 0
+                    attackLoop = False
+                    menu(name, True, False, False)
+
+                if goblinHP > 0:
+                    print("Goblin: " , goblinHP)
+                    attackLoop = True
+            else:
+                print("\nYou no longer have any defenses.\n")
+
+        elif specialAttackBar < 50:
+            print("\nYou do not have enough special attack meter! Defend to gain more. (Requires 50)\n")
+        elif specialAttackBar == 0:
+            print("\nYou do not have anymore special attack left!\n")
+
+        elif attackChoice == 2 and specialAttackBar != 0:
             print("\nYou use a special attack!\n")
+            specialAttackBar = specialAttackBar - 50
             specialAttack = random.randint(10,50)
             print("\n\nYou deal " , specialAttack , "!")
             goblinHP = goblinHP - specialAttack
@@ -50,20 +94,23 @@ def warriorBattlePT(name, HP, Defense, menuChoice):
             HP = HP - NPCdamage
             print("\nGoblin hits you for " , NPCdamage , "!\n")
 
-            if HP != 0:
-                print(name, ": " ,HP)
+            if HP >= 0:
+                print(name, ": " ,int(math.ceil(HP)))
                 attackLoop = True
             if HP <= 0:
                 print("You lose. . .")
+                HP = 0
                 attackLoop = False
+                menu(name, True, False, False)
 
-            if goblinHP != 0:
+            if goblinHP > 0:
                 print("Goblin: " , goblinHP)
                 attackLoop = True
             if goblinHP <= 0:
                 goblinHP = 0
                 print("Victory!")
                 attackLoop = False
+                menu(name, True, False, False)
 
         
 
