@@ -13,10 +13,16 @@ def menu(name, warriorSelect, wizardSelect, archerSelect):
     LineLoop()
     if warriorSelect == True:
         if menuSelect == 1:
-            warriorBattlePT(name, 150, 50)
+            Battle(name, 250, 50)
+    if wizardSelect == True:
+        if menuSelect == 1:
+            Battle(name, 100, 25)
+    if archerSelect == True:
+        if menuSelect == 1:
+            Battle(name, 150, 35)
 
 
-def warriorBattlePT(name, HP, Defense):
+def Battle(name, HP, Defense):
     print("Goblin has spawned!\n\nHP: 100\n\n")
     attackLoop = True
     specialAttackBar = 100
@@ -85,8 +91,12 @@ def warriorBattlePT(name, HP, Defense):
 
         elif specialAttackBar < 50:
             print("\nYou do not have enough special attack meter! Defend to gain more. (Requires 50)\n")
+            print(name, ": " ,int(math.ceil(HP)))
+            print("Goblin: " , goblinHP)
         elif specialAttackBar == 0:
             print("\nYou do not have anymore special attack left!\n")
+            print(name, ": " ,int(math.ceil(HP)))
+            print("Goblin: " , goblinHP)
 
         elif attackChoice == 2 and specialAttackBar != 0:
             print("\nYou use a special attack!")
@@ -143,6 +153,7 @@ while(loop):
             if wizardChoice.lower() == "y":
                 print("\n\nYour destiny is sealed.\n\nNow commencing wizard playthrough. . .\n")
                 wizardSelect = True
+                menu(name, False, True, False)
                 loop = False
             elif wizardChoice.lower() == "n":
                 print("\n\nLack of intelligence and poor mana management will not bode well with this class... Maybe, it is not for you. . .\n")
@@ -152,6 +163,7 @@ while(loop):
             if archerChoice.lower() == "y":
                 print("\n\nYour destiny is sealed.\n\nNow commencing archer playthrough. . .\n")
                 archerSelect = True
+                menu(name, False, False, True)
                 loop = False
             elif archerChoice.lower() == "n":
                 print("\n\nIt takes agility and precision to master this class... Maybe, it is not for you. . .\n")
