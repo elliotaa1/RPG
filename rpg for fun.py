@@ -2,12 +2,15 @@ from re import match
 import random
 import math
 
+# Between 18-20, the better proficiency = lower the floor, keep the ceiling
+
 def LineLoop():
     for x in range(1, 25):
         print("\n")
 
 def menu(name, warriorSelect, wizardSelect, archerSelect):
     menuSelect = int(input("Please Select One:\n\n1. Battle\n2. Barracks\n3. Settings\n"))
+    LineLoop()
     if warriorSelect == True:
         if menuSelect == 1:
             warriorBattlePT(name, 150, 50)
@@ -22,6 +25,7 @@ def warriorBattlePT(name, HP, Defense):
         print("Defense: ",int(math.ceil(Defense)))
         print("Special attack:" , specialAttackBar)
         attackChoice = int(input("1. Auto Attack\n2. Special Attack\n3. Defend\n4. Flee\n\nChoice: "))
+        LineLoop()
         if attackChoice == 1:
             attackDamage = random.randint(0,25)
             print("\n\nYou deal " , attackDamage , "!")
@@ -85,7 +89,7 @@ def warriorBattlePT(name, HP, Defense):
             print("\nYou do not have anymore special attack left!\n")
 
         elif attackChoice == 2 and specialAttackBar != 0:
-            print("\nYou use a special attack!\n")
+            print("\nYou use a special attack!")
             specialAttackBar = specialAttackBar - 50
             specialAttack = random.randint(10,50)
             print("\n\nYou deal " , specialAttack , "!")
