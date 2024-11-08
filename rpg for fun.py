@@ -9,7 +9,7 @@ def LineLoop():
         print("\n")
 
 def menu(name, warriorSelect, wizardSelect, archerSelect):
-    menuSelect = int(input("Please Select One:\n\n1. Battle\n2. Barracks\n3. Settings\n"))
+    menuSelect = int(input("Please Select One:\n\n1. Battle\n2. Barracks (Not functional)\n3. Settings (Not functional)\n"))
     LineLoop()
     if warriorSelect == True:
         if menuSelect == 1:
@@ -30,7 +30,7 @@ def Battle(name, HP, Defense):
     while(attackLoop):
         print("Defense: ",int(math.ceil(Defense)))
         print("Special attack:" , specialAttackBar)
-        attackChoice = int(input("1. Auto Attack\n2. Special Attack\n3. Defend\n4. Flee\n\nChoice: "))
+        attackChoice = int(input("1. Auto Attack\n2. Special Attack\n3. Defend\n4. Flee(Not functional)\n\nChoice: "))
         LineLoop()
         if attackChoice == 1:
             attackDamage = random.randint(0,25)
@@ -104,39 +104,69 @@ def Battle(name, HP, Defense):
             print("Goblin: " , goblinHP, "%")
 
         elif attackChoice == 2 and specialAttackBar != 0:
-            specialAttackBar = specialAttackBar - 50
-            specialAttack = random.randint(10,50)
-            if specialAttack >= 18 and specialAttack <=20:
-                critDamage = random.randint(25,50)
-                print("\n\nYou deal a critical strike !" , critDamage, "")
-                goblinHP = goblinHP - critDamage
-            else:
-                print("\nYou use a special attack!")
-                print("\n\nYou deal " , specialAttack , "!")
-            goblinHP = goblinHP - specialAttack
-            NPCdamage = random.randint(0, 10)
-            HP = HP - NPCdamage
-            print("\nGoblin hits you for " , NPCdamage , "!\n")
+            playerSpecialAttack(name, HP, specialAttackBar, goblinHP)
+            # specialAttackBar = specialAttackBar - 50
+            # specialAttack = random.randint(10,50)
+            # if specialAttack >= 18 and specialAttack <=20:
+            #     critDamage = random.randint(25,50)
+            #     print("\n\nYou deal a critical strike !" , critDamage, "")
+            #     goblinHP = goblinHP - critDamage
+            # else:
+            #     print("\nYou use a special attack!")
+            #     print("\n\nYou deal " , specialAttack , "!")
+            # goblinHP = goblinHP - specialAttack
+            # NPCdamage = random.randint(0, 10)
+            # HP = HP - NPCdamage
+            # print("\nGoblin hits you for " , NPCdamage , "!\n")
 
-            if HP >= 0:
-                print(name, ": " ,int(math.ceil(HP)), "%")
-                attackLoop = True
-            if HP <= 0:
-                print("You lose. . .")
-                HP = 0
-                attackLoop = False
-                menu(name, True, False, False)
+            # if HP >= 0:
+            #     print(name, ": " ,int(math.ceil(HP)), "%")
+            #     attackLoop = True
+            # if HP <= 0:
+            #     print("You lose. . .")
+            #     HP = 0
+            #     attackLoop = False
+            #     menu(name, True, False, False)
 
-            if goblinHP > 0:
-                print("Goblin: " , goblinHP, "%")
-                attackLoop = True
-            if goblinHP <= 0:
-                goblinHP = 0
-                print("Victory!")
-                attackLoop = False
-                menu(name, True, False, False)
+            # if goblinHP > 0:
+            #     print("Goblin: " , goblinHP, "%")
+            #     attackLoop = True
+            # if goblinHP <= 0:
+            #     goblinHP = 0
+            #     print("Victory!")
+            #     attackLoop = False
+            #     menu(name, True, False, False)
 
 
+def playerSpecialAttack(name, HP, specialAttackBar, goblinHP):
+    specialAttackBar = 100
+    specialAttackBar = specialAttackBar - 50
+    specialAttack = random.randint(10,50)
+    if specialAttack >= 18 and specialAttack <=20:
+            critDamage = random.randint(25,50)
+            print("\n\nYou deal a critical strike !" , critDamage, "")
+            goblinHP = goblinHP - critDamage
+    else:
+        print("\nYou use a special attack!")
+        print("\n\nYou deal " , specialAttack , "!")
+    goblinHP = goblinHP - specialAttack
+    NPCdamage = random.randint(0, 10)
+    HP = HP - NPCdamage
+    print("\nGoblin hits you for " , NPCdamage , "!\n")
+
+    if HP >= 0:
+        print(name, ": " ,int(math.ceil(HP)), "%")
+    if HP <= 0:
+        print("You lose. . .")
+        HP = 0
+        menu(name, True, False, False)
+
+    if goblinHP > 0:
+        print("Goblin: " , goblinHP, "%")
+    if goblinHP <= 0:
+        goblinHP = 0
+        print("Victory!")
+        menu(name, True, False, False)
 
 
         
